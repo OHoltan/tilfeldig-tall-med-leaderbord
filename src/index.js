@@ -46,7 +46,16 @@ document.addEventListener('keydown', e => {
             output.textContent = "Tallet er Større"
         }
         input.value = "";
+        
     }
 })
 
+function score(params) {
+    let count = 0;
 
+    setInterval(function() {
+        count + 
+        count++;
+        console.log(count);
+    }, 100);
+}
