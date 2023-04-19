@@ -1,0 +1,16 @@
+
+div{
+    font-family: arial;
+    text-align: center;
+    width: 100%;
+    max-width: 300px;
+    margin: 10% auto;
+    padding: 20px;
+    background: lightgray;
+    border-radius: 10px;
+    position: relative;
+}
+
+.number{
+    padding: 100px;
+}
