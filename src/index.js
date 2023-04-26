@@ -6,7 +6,6 @@ import {
     collection,
     onSnapshot,
     addDoc,
-    doc, 
     query, 
     orderBy 
 } from "firebase/firestore";
@@ -30,11 +29,6 @@ const app = initializeApp(firebaseConfig);
 
 
 
-
-
-
-
-
 const input = document.querySelector('#input')
 const output = document.querySelector('#output')
 const namefield = document.querySelector(".namefield")
@@ -47,7 +41,7 @@ const scoreboard = document.querySelector(".scorebord")
 
 const desimal = Math.random()*100
 let number = Math.round(desimal)
-const scoreboardleanght = 9
+const scoreboardleanght = 10
 
 let count = 0;
 let timerId;  
@@ -96,25 +90,6 @@ input.addEventListener('keydown', e => {
 })
 
 
-function incrementCount() {
-    count++;
-    document.getElementById("score").textContent = `score : ${count}`;
-    console.log(count)
-}
-
-function addTen() {
-    count += 10;
-}
-  
-function startTimer() {
-    timerId = setInterval(incrementCount, 100);
-}
-  
-function stopTimer() {
-    clearInterval(timerId);
-}
-
-
 
 addScore.addEventListener('submit', (e) => {
     e.preventDefault()
@@ -132,24 +107,9 @@ onSnapshot(q, (snapshot) => {
     let playerScores = []
     snapshot.docs.forEach((doc) => {
         playerScores.push({...doc.data(), id: doc.id })
-        })
-        
-        const elementsToRemove = document.querySelectorAll('.scorelistli');
-
-
-        elementsToRemove.forEach(element => {
-            element.remove();
-        });
-
-        for (let i = 0; i < playerScores.length && i < scoreboardleanght; i++){ 
-            
-            const li = document.createElement('li')
-            li.textContent = `#${i+1} Name : ${playerScores[i].name}  Score : ${playerScores[i].score}`
-            li.classList.add("scorelistli")
-
-            scoreboard.append(li)
-
-        }   
+    })
+    removeScores()
+    inputscores(playerScores)
 
 })
 
@@ -164,3 +124,44 @@ function restart() {
     namefield.classList.toggle("hidden")
     
 }
+
+function inputscores(p1) {
+
+    for (let i = 0; i < p1.length && i < scoreboardleanght; i++){ 
+            
+        const li = document.createElement('li')
+        li.textContent = `#${i+1} Name : ${p1[i].name}  Score : ${p1[i].score}`
+        li.classList.add("scorelistli")
+
+        scoreboard.append(li)
+
+    }   
+}
+
+function removeScores() {
+    const elementsToRemove = document.querySelectorAll('.scorelistli');
+
+    elementsToRemove.forEach(element => {
+        element.remove();
+    });
+}
+
+
+function incrementCount() {
+    count++;
+    document.getElementById("score").textContent = `score : ${count}`;
+    // console.log(count)
+}
+
+function addTen() {
+    count += 10;
+}
+  
+function startTimer() {
+    timerId = setInterval(incrementCount, 100);
+}
+  
+function stopTimer() {
+    clearInterval(timerId);
+}
+
